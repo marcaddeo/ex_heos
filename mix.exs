@@ -14,7 +14,13 @@ defmodule ExHeos.Mixfile do
   #
   # Type "mix help compile.app" for more information
   def application do
-    [applications: [:logger]]
+    [
+      mod: {ExHeos, []},
+      applications: [
+        :logger,
+        :nerves_ssdp_client,
+      ]
+    ]
   end
 
   # Dependencies can be Hex packages:
@@ -27,6 +33,8 @@ defmodule ExHeos.Mixfile do
   #
   # Type "mix help deps" for more examples and options
   defp deps do
-    []
+    [
+      {:nerves_ssdp_client, git: "https://github.com/nerves-project/nerves_ssdp_client"},
+    ]
   end
 end
