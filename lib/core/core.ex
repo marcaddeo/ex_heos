@@ -44,8 +44,8 @@ defmodule ExHeos.Core do
   end
 
   def handle_info({:tcp, _, messages}, state) do
-    for msg <- String.split(String.rstrip(messages), "\r\n") do
-      handle_message(msg)
+    for message <- String.split(String.rstrip(messages), "\r\n") do
+      handle_message(message)
     end
 
     {:noreply, state}
