@@ -56,6 +56,7 @@ defmodule ExHeos.Core do
   end
 
   defp handle_message(message) do
+    message = message |> Poison.decode!
     send_to_modules({:message, message})
   end
 

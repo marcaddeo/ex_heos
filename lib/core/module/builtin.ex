@@ -12,7 +12,7 @@ defmodule ExHeos.Core.Module.Builtin do
   end
 
   def handle_message({:message, message}, state) do
-    Logger.log :debug, "Received message: #{message}"
+    IO.inspect message
 
     {:noreply, state}
   end

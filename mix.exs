@@ -35,6 +35,7 @@ defmodule ExHeos.Mixfile do
   defp deps do
     [
       {:nerves_ssdp_client, git: "https://github.com/nerves-project/nerves_ssdp_client"},
+      {:poison, "~> 2.0"},
     ]
   end
 end

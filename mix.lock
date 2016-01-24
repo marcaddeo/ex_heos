@@ -1,1 +1,2 @@
-%{"nerves_ssdp_client": {:git, "https://github.com/nerves-project/nerves_ssdp_client", "527c571c0f148da7cf8fb1b8bfaed569192b4843", []}}
+%{"nerves_ssdp_client": {:git, "https://github.com/nerves-project/nerves_ssdp_client", "527c571c0f148da7cf8fb1b8bfaed569192b4843", []},
+  "poison": {:hex, :poison, "2.0.1"}}
