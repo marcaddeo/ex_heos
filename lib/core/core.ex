@@ -5,7 +5,11 @@ defmodule ExHeos.Core do
   @port 1255
 
   def start_link(opts \\ []) do
-    {:ok, pid } = GenServer.start_link(__MODULE__, :ok, opts)
+    GenServer.start_link(__MODULE__, :ok, opts)
+  end
+
+  def send(message) do
+    GenServer.call(__MODULE__, {:send, message})
   end
 
   def init(:ok) do
@@ -35,6 +39,7 @@ defmodule ExHeos.Core do
   end
 
   def handle_info(:init, state) do
+    send_to_modules(:connected)
     {:noreply, state}
   end
 
@@ -51,8 +56,12 @@ defmodule ExHeos.Core do
   end
 
   defp handle_message(message) do
-    require Logger
+    send_to_modules({:message, message})
+  end
 
-    Logger.log :debug, "Received #{message}"
+  defp send_to_modules(x) do
+    for module <- :pg2.get_members(:modules) do
+      GenServer.cast(module, x)
+    end
   end
 end
