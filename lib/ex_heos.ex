@@ -23,4 +23,8 @@ defmodule ExHeos do
 
     Supervisor.start_link(children, strategy: :one_for_one)
   end
+
+  def init(_) do
+    :ok
+  end
 end

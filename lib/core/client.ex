@@ -318,7 +318,7 @@ defmodule ExHeos.Core.Client do
   def set_play_mode(pid), do: command("player/set_play_mode", %{pid: pid})
 
   def get_queue(pid), do: command("player/get_queue", %{pid: pid})
-  def get_queue(pid, first..last = range) do
+  def get_queue(pid, first..last) do
     command("player/get_queue", %{pid: pid, range: "#{first},#{last}"})
   end
 
@@ -386,7 +386,9 @@ defmodule ExHeos.Core.Client do
     command = "heos://" <> command
 
     unless Enum.empty?(args) do
-      command = command <> "?" <> URI.encode_query(args)
+      command = command <> "?" <> Enum.map_join(args, "&", fn ({k, v}) ->
+        to_string(k) <> "=" <> to_string(v)
+      end)
     end
 
     Core.send(command)

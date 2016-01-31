@@ -16,7 +16,7 @@ defmodule ExHeos.Core do
     require Logger
 
     # Find the first HEOS device
-    {:ok, [{_, %{host: host}} = device | _]} = Util.discover
+    {:ok, [{_, %{host: host}} | _]} = Util.discover
     host = host |> String.to_char_list
 
     Logger.log :debug, "Connecting to #{host}:#{@port}"
@@ -33,7 +33,7 @@ defmodule ExHeos.Core do
 
     Logger.log :debug, "Sending #{message}"
 
-    :gen_tcp.send(socket, message)
+    :gen_tcp.send(socket, message <> "\r\n")
 
     {:reply, :ok, state}
   end
