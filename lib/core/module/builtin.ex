@@ -1,13 +1,17 @@
 defmodule ExHeos.Core.Module.Builtin do
   use ExHeos.Module, "builtin"
-  alias ExHeos.Core
-  require Logger
+  alias ExHeos.Core.Client
 
   def handle_message(:connected, state) do
+    require Logger
     Logger.log :debug, "Enabling change events!"
 
-    Core.send("heos://system/register_for_change_events?enable=on")
+    Client.register_for_change_events("on")
 
+    {:noreply, state}
+  end
+
+  def handle_message({:message, %{"heos" => %{"command" => "event/" <> _}}}, state) do
     {:noreply, state}
   end
 
