@@ -19,6 +19,7 @@ defmodule ExHeos.Mixfile do
       applications: [
         :logger,
         :nerves_ssdp_client,
+        :quantum,
       ]
     ]
   end
@@ -36,6 +37,7 @@ defmodule ExHeos.Mixfile do
     [
       {:nerves_ssdp_client, git: "https://github.com/nerves-project/nerves_ssdp_client"},
       {:poison, "~> 2.0"},
+      {:quantum, ">= 1.6.1"},
     ]
   end
 end

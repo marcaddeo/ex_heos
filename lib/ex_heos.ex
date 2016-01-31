@@ -2,6 +2,7 @@ defmodule ExHeos do
   use Application
   use Supervisor
   alias ExHeos.Core
+  alias ExHeos.Core.Player.Server, as: PlayerServer
   alias ExHeos.Core.Module.Supervisor, as: ModuleSupervisor
 
   def start(_, _) do
@@ -14,7 +15,8 @@ defmodule ExHeos do
 
     children = [
       supervisor(ModuleSupervisor, [[name: ModuleSupervisor]]),
-      worker(Core, [[name: Core]])
+      worker(PlayerServer, []),
+      worker(Core, [[name: Core]]),
     ]
 
     Logger.log :debug, "Starting Supervisors!"
