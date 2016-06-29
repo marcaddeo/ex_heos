@@ -1,6 +1,7 @@
 defmodule ExHeos.Core.Module.Supervisor do
   use Supervisor
   alias ExHeos.Core.Module.Builtin
+  alias ExHeos.Core.Module.Player
 
   def start_link(opts \\ []) do
     Supervisor.start_link(__MODULE__, :ok, opts)
@@ -9,7 +10,12 @@ defmodule ExHeos.Core.Module.Supervisor do
   def init(:ok) do
     require Logger
 
-    modules = [Builtin | Application.get_env(:ex_heos, :modules)]
+    core_modules = [
+      Builtin,
+      Player,
+    ]
+
+    modules = core_modules ++ Application.get_env(:ex_heos, :modules)
     children = for module <- modules do
       worker(module, [])
     end

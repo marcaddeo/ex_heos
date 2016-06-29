@@ -29,4 +29,4 @@ use Mix.Config
 #
 #     import_config "#{Mix.env}.exs"
 
-config :ex_heos, modules: []
+config :ex_heos, modules: [ExHeos.ExampleModule]

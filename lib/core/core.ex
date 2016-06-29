@@ -12,6 +12,12 @@ defmodule ExHeos.Core do
     GenServer.call(__MODULE__, {:send, message})
   end
 
+  def broadcast(message) do
+    for module <- :pg2.get_members(:modules) do
+      GenServer.cast(module, message)
+    end
+  end
+
   def init(:ok) do
     require Logger
 
@@ -39,7 +45,7 @@ defmodule ExHeos.Core do
   end
 
   def handle_info(:init, state) do
-    send_to_modules(:connected)
+    broadcast(:connected)
     {:noreply, state}
   end
 
@@ -57,12 +63,6 @@ defmodule ExHeos.Core do
 
   defp handle_message(message) do
     message = message |> Poison.decode!
-    send_to_modules({:message, message})
-  end
-
-  defp send_to_modules(x) do
-    for module <- :pg2.get_members(:modules) do
-      GenServer.cast(module, x)
-    end
+    broadcast({:message, message})
   end
 end

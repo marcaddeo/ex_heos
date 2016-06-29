@@ -34,14 +34,10 @@ defmodule ExHeos.Module do
       def handle_cast(message, state) do
         require Logger
 
-        Logger.log :debug, "Running module #{@module_name}'s dispatcher!'"
-
         try do
           handle_message(message, state)
         rescue
           FunctionClauseError ->
-            Logger.log :debug, "Message fell through for #{@module_name}"
-
             {:noreply, state}
         end
       end
